@@ -11,7 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.chatproject.databinding.ActivityMainBinding;
-import com.example.chatproject.ui.login.LoginActivity;
+import com.example.chatproject.ui.login.LogInActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         } else {
-            activityIntent = new Intent(this, LoginActivity.class);
+            activityIntent = new Intent(this, LogInActivity.class);
             startActivity(activityIntent);
         }
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startLogin(View v) {
-        Intent i = new Intent(this, LoginActivity.class);
+        Intent i = new Intent(this, LogInActivity.class);
         startActivity(i);
     }
 }
