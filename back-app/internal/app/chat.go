@@ -3,23 +3,55 @@ package app
 import (
 	"chat-project-go/pkg/websocket"
 	"fmt"
-
-	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
-func (s *Services) ServeWsChat(pool *websocket.Pool, conn *gin.Context) {
-	fmt.Println("WebSocket Endpoint")
-	wsConn, err := websocket.Upgrade(conn.Writer, conn.Request)
+func (s *Services) StartConversationWithUser(message websocket.Message) {
+
+}
+
+func (s *Services) SendMessageToUser(message websocket.Message) {
+	senderUserId := message.UserID
+	conversationId := (fmt.Sprintf("%s", message.Body["conversation_id"]))
+	text := message.Body["text"].(string)
+
+	conversationIdInt64, err := strconv.ParseInt(conversationId, 10, 64)
 
 	if err != nil {
-		fmt.Fprintf(conn.Writer, "%+v\n", err)
+		fmt.Println(err)
 	}
 
-	client := &websocket.Client{
-		Conn: wsConn,
-		Pool: pool,
+	err = s.chatService.SendMessageToConversation(senderUserId, int64(conversationIdInt64), text)
+
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	pool.Register <- client
-	client.Read()
+	s.wsPool.Clients[senderUserId].WriteJSON(err)
+}
+
+func (s *Services) GetConversationMsgs(message websocket.Message) {
+	userId := message.UserID
+	conversationId := (fmt.Sprintf("%s", message.Body["conversation_id"]))
+
+	result, err := s.chatService.GetChatMessages(conversationId)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	s.wsPool.Clients[userId].WriteJSON(result)
+
+}
+
+func (s *Services) GetAllChatsLastMsg(message websocket.Message) {
+	userId := message.UserID
+
+	result, err := s.chatService.GetAllChatsById(userId)
+
+	if err != nil {
+		return
+	}
+
+	s.wsPool.Clients[userId].WriteJSON(result)
 }
