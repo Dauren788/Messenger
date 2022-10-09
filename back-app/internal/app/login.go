@@ -11,11 +11,11 @@ func (s *Services) Login(c *gin.Context) {
 	userEmail, userPassword, _ := c.Request.BasicAuth()
 
 	fmt.Println(userEmail, userPassword)
-	jwtToken, err := s.authService.SignIn(userEmail, userPassword)
+	userData, jwtToken, err := s.authService.SignIn(userEmail, userPassword)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	c.JSON(http.StatusOK, jwtToken)
+	c.JSON(http.StatusOK, gin.H{"jwtToken": jwtToken, "userData": userData})
 }

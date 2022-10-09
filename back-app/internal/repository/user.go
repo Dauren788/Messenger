@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"chat-project-go/internal/datastruct"
 	"chat-project-go/internal/dto"
 	"database/sql"
 	"fmt"
@@ -8,7 +9,7 @@ import (
 
 type UserRepositoryContract interface {
 	CreateUser(user dto.User) (int64, error)
-	GetUser(id int64) (*dto.User, error)
+	GetUserByEmail(email string) (*datastruct.User, error)
 	GetUserPasswordByEmail(email string) (string, error)
 	GetUserIdByEmail(email string) (int64, error)
 }
@@ -29,7 +30,7 @@ func (u UserRepository) CreateUser(user dto.User) (int64, error) {
 	query := fmt.Sprintf(`INSERT INTO dbo.users (username, name, surname, email, phone, password_hash, role) 
 		VALUES ('%s', '%s', '%s', '%s', '%v', '%s', '%s'); 
 		SELECT SCOPE_IDENTITY()`,
-		user.Username, user.Name, user.Surname, user.Email, user.Phone, user.PasswordHash, user.UserType)
+		user.Username, user.Name, user.Surname, user.Email, user.Phone, user.PasswordHash, dto.REGULAR)
 
 	if stmt, err = u.db().Prepare(query); err != nil {
 		fmt.Println(err)
@@ -46,8 +47,26 @@ func (u UserRepository) CreateUser(user dto.User) (int64, error) {
 	return id, nil
 }
 
-func (u UserRepository) GetUser(id int64) (*dto.User, error) {
-	return nil, nil
+func (u UserRepository) GetUserByEmail(email string) (*datastruct.User, error) {
+	var user datastruct.User
+	var stmt *sql.Stmt
+	var err error
+
+	query := fmt.Sprintf(`SELECT * FROM dbo.users WHERE email='%s'`, email)
+
+	if stmt, err = u.db().Prepare(query); err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	defer stmt.Close()
+
+	if err := u.db().QueryRow(query).Scan(&user.Id, &user.Username, &user.Name, &user.Surname, &user.Email, &user.Phone, &user.PasswordHash, &user.UserType); err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &user, nil
 }
 
 func (u UserRepository) GetUserPasswordByEmail(email string) (string, error) {

@@ -14,8 +14,6 @@ func (s *Services) Register(c *gin.Context) {
 		c.String(http.StatusBadRequest, err.Error())
 	}
 
-	user.UserType = dto.REGULAR
-
 	createdUserID, _ := s.authService.SignUp(user)
 
 	c.JSON(http.StatusOK, createdUserID)

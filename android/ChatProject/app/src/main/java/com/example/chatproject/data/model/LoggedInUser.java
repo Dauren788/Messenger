@@ -1,23 +1,28 @@
 package com.example.chatproject.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    @SerializedName(value="jwtToken")
+    private String jwtToken;
+    @SerializedName(value="userData")
+    private User userData;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
+    public LoggedInUser(String jwtToken, User userData) {
+        this.jwtToken = jwtToken;
+        this.userData = userData;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getJwtToken() {
+        return this.jwtToken;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public User getUser() {
+        return this.userData;
     }
+
 }

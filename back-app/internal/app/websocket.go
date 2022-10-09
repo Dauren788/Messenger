@@ -10,14 +10,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Services) ServeWs(pool *websocket.Pool, conn *gin.Context, userId int64) {
-	wsConn, err := websocket.Upgrade(conn.Writer, conn.Request)
+func (s *Services) ServeWs(pool *websocket.Pool, ctx *gin.Context, userId int64) {
+	wsConn, err := websocket.Upgrade(ctx.Writer, ctx.Request)
 
 	if err != nil {
-		fmt.Fprintf(conn.Writer, "%+v\n", err)
+		fmt.Fprintf(ctx.Writer, "%+v\n", err)
 	}
 
 	userIdStr := strconv.Itoa(int(userId))
+	// userId, exists := ctx.Get("UserId")
+
+	// fmt.Println(userId.(string))
+	// if !exists {
+	// 	fmt.Fprintf(ctx.Writer, "%+v\n", false)
+	// }
 
 	client := &websocket.Client{
 		ID:   userIdStr,
@@ -46,18 +52,25 @@ func (s *Services) ServeWs(pool *websocket.Pool, conn *gin.Context, userId int64
 	}
 }
 
+var (
+	GettAllChatsLastMsg       float64 = 0
+	SendMessageToUser         float64 = 1
+	GetConversationMsgs       float64 = 2
+	StartConversationWithUser float64 = 3
+)
+
 func (s *Services) ProcessMessage(message websocket.Message) {
 	switch message.Body["type"].(float64) {
-	case 0:
+	case GettAllChatsLastMsg:
 		// Get all last messages from everyone
 		s.GetAllChatsLastMsg(message)
-	case 1:
+	case SendMessageToUser:
 		// Send message to user
 		s.SendMessageToUser(message)
-	case 2:
+	case GetConversationMsgs:
 		// Get conversation messages
 		s.GetConversationMsgs(message)
-	case 3:
+	case StartConversationWithUser:
 		// Start new conversation
 		s.StartConversationWithUser(message)
 	}

@@ -9,22 +9,34 @@
         <entry key="..\:/Users/ddaur/Desktop/Messenger/android/ChatProject/app/src/main/res/layout/activity_main.xml" value="0.18432971014492755" />
         <entry key="..\:/Users/ddaur/Desktop/Messenger/android/ChatProject/app/src/main/res/layout/fragment_chats.xml" value="0.3" />
         <entry key="..\:/Users/ddaur/Desktop/Messenger/android/ChatProject/app/src/main/res/layout/fragment_home.xml" value="0.3" />
+        <entry key="app/src/main/res/drawable/bg_receive_message.xml" value="0.3" />
+        <entry key="app/src/main/res/drawable/chat_bubble_left.xml" value="0.3" />
+        <entry key="app/src/main/res/drawable/chat_bubble_right.xml" value="0.3" />
+        <entry key="app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.2785" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.12013888888888889" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.16018518518518518" />
         <entry key="app/src/main/res/layout/activity_greeting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_logup.xml" value="0.3703125" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.16018518518518518" />
+        <entry key="app/src/main/res/layout/activity_registration.xml" value="0.10733695652173914" />
+        <entry key="app/src/main/res/layout/card_chats_list_view.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/card_chatting_view.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/card_chatview.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/chat_display_layout.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.16018518518518518" />
         <entry key="app/src/main/res/layout/feed_page.xml" value="0.11776348342404751" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/fragment_chats.xml" value="0.33016304347826086" />
+        <entry key="app/src/main/res/layout/fragment_chats.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_chatting.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_feeds.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.16018518518518518" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33016304347826086" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33016304347826086" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.16018518518518518" />
+        <entry key="app/src/main/res/layout/frame_chatview.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.12318840579710146" />
       </map>

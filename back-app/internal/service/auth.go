@@ -10,7 +10,7 @@ import (
 
 type AuthService interface {
 	SignUp(user *dto.User) (*int64, error)
-	SignIn(email, password string) (*string, error)
+	SignIn(email, password string) (*dto.User, *string, error)
 	Logout(userID int64) error
 }
 
@@ -38,28 +38,33 @@ func (a *authService) SignUp(user *dto.User) (*int64, error) {
 	return &id, nil
 }
 
-func (a *authService) SignIn(email, reqPassword string) (*string, error) {
-	reqPassword = fmt.Sprintf("%x", md5.Sum([]byte(reqPassword)))
+func (a *authService) SignIn(email, reqPassword string) (*dto.User, *string, error) {
+	reqPasswordHash := fmt.Sprintf("%x", md5.Sum([]byte(reqPassword)))
 
-	password, err := a.userRepository.GetUserPasswordByEmail(email)
+	result, err := a.userRepository.GetUserByEmail(email)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	if password != reqPassword {
-		return nil, fmt.Errorf("passwords don't match")
+	user := dto.User{
+		Id:           result.Id,
+		Username:     result.Username,
+		Name:         result.Name,
+		Surname:      result.Surname,
+		Email:        result.Email,
+		Phone:        result.Phone,
+		PasswordHash: result.PasswordHash,
+	}
+
+	if user.PasswordHash != reqPasswordHash {
+		return nil, nil, fmt.Errorf("passwords don't match")
 	} else {
-		userID, err := a.userRepository.GetUserIdByEmail(email)
+		jwt, err := a.tokenManager.NewJWT(strconv.Itoa(int(user.Id)))
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 
-		jwt, err := a.tokenManager.NewJWT(strconv.Itoa(int(userID)))
-		if err != nil {
-			return nil, err
-		}
-
-		return &jwt, nil
+		return &user, &jwt, nil
 	}
 }
 
