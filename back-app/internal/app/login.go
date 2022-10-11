@@ -10,7 +10,6 @@ import (
 func (s *Services) Login(c *gin.Context) {
 	userEmail, userPassword, _ := c.Request.BasicAuth()
 
-	fmt.Println(userEmail, userPassword)
 	userData, jwtToken, err := s.authService.SignIn(userEmail, userPassword)
 
 	if err != nil {

@@ -6,22 +6,28 @@ import (
 )
 
 type Services struct {
-	authService  service.AuthService
-	chatService  service.ChatService
-	feedsService service.FeedService
-	wsPool       *websocket.Pool
+	authService     service.AuthService
+	chatService     service.ChatService
+	feedsService    service.FeedService
+	friendService   service.FriendService
+	jwtTokenService service.TokenManager
+	wsPool          *websocket.Pool
 }
 
 func NewServices(
 	authService service.AuthService,
 	chatService service.ChatService,
 	feedsService service.FeedService,
+	friendService service.FriendService,
+	jwtTokenService service.TokenManager,
 	wsPool *websocket.Pool,
 ) *Services {
 	return &Services{
-		authService:  authService,
-		chatService:  chatService,
-		feedsService: feedsService,
-		wsPool:       wsPool,
+		authService:     authService,
+		chatService:     chatService,
+		feedsService:    feedsService,
+		friendService:   friendService,
+		jwtTokenService: jwtTokenService,
+		wsPool:          wsPool,
 	}
 }

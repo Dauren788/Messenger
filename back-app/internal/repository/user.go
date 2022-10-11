@@ -12,6 +12,7 @@ type UserRepositoryContract interface {
 	GetUserByEmail(email string) (*datastruct.User, error)
 	GetUserPasswordByEmail(email string) (string, error)
 	GetUserIdByEmail(email string) (int64, error)
+	Search(str string) (*[]datastruct.PossibleFriend, error)
 }
 
 type UserRepository struct {
@@ -111,4 +112,34 @@ func (u UserRepository) GetUserIdByEmail(email string) (int64, error) {
 	}
 
 	return id, nil
+}
+
+func (u UserRepository) Search(searchStr string) (*[]datastruct.PossibleFriend, error) {
+	var users []datastruct.PossibleFriend
+
+	query := `SELECT id, username, name, surname FROM users WHERE (username + '|' + name + '|' + surname) LIKE '%` + searchStr + `%';`
+
+	rows, err := u.db().Query(query)
+
+	fmt.Println(rows)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var user datastruct.PossibleFriend
+		err = rows.Scan(&user.Id, &user.Username, &user.Name, &user.Surname)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		users = append(users, user)
+	}
+
+	return &users, nil
 }
