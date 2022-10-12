@@ -52,6 +52,34 @@ func (s *Services) SendFriendshipInvite(c *gin.Context) {
 	}
 }
 
+func (s *Services) FriendshipPending(c *gin.Context) {
+	authToken := c.GetHeader("AuthToken")
+
+	userId, err := s.jwtTokenService.Parse(authToken)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	userIdStr := strconv.FormatInt(int64(*userId), 10)
+
+	var body map[string]interface{}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+	}
+
+	toUserID := body["toUserID"].(string)
+
+	result, err := s.friendService.GetPending(userIdStr, toUserID)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	c.JSON(http.StatusOK, result)
+}
+
 func (s *Services) AcceptInvite(c *gin.Context) {
 
 }

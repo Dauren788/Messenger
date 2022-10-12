@@ -8,6 +8,7 @@ import (
 type FriendService interface {
 	Search(searchStr string) (*[]datastruct.PossibleFriend, error)
 	SendInvite(userID1, userID2 string) error
+	GetPending(userID1, userID2 string) ([]datastruct.PendingInvite, error)
 }
 
 type friendService struct {
@@ -43,4 +44,15 @@ func (f *friendService) SendInvite(userID1, userID2 string) error {
 	}
 
 	return nil
+}
+
+func (f *friendService) GetPending(userID1, userID2 string) ([]datastruct.PendingInvite, error) {
+	result, err := f.friendsRepo.GetPending(userID1, userID2)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+
 }

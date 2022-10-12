@@ -42,7 +42,7 @@ func main() {
 	router.POST("/feeds/", services.GetFeeds)
 	router.POST("/feeds/post/", services.GetFeeds)
 	router.GET("/friends/search/", services.SearchFriend)
-	router.GET("/friends/pending/", nil)
+	router.GET("/friends/pending/", services.FriendshipPending)
 	router.POST("/friends/invite/", services.SendFriendshipInvite)
 	router.POST("/friends/accept/", services.AcceptInvite)
 	router.POST("/register/", services.Register)
