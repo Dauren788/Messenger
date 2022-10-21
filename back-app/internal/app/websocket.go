@@ -10,20 +10,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Services) ServeWs(pool *websocket.Pool, ctx *gin.Context, userId int64) {
+func (s *Services) ServeWs(pool *websocket.Pool, ctx *gin.Context) {
+	authToken := ctx.Request.Header.Get("AuthToken")
+
+	userId, _ := s.jwtTokenService.Parse(authToken)
+
+	userIdStr := strconv.FormatInt(int64(*userId), 10)
+
 	wsConn, err := websocket.Upgrade(ctx.Writer, ctx.Request)
 
 	if err != nil {
 		fmt.Fprintf(ctx.Writer, "%+v\n", err)
 	}
-
-	userIdStr := strconv.Itoa(int(userId))
-	// userId, exists := ctx.Get("UserId")
-
-	// fmt.Println(userId.(string))
-	// if !exists {
-	// 	fmt.Fprintf(ctx.Writer, "%+v\n", false)
-	// }
 
 	client := &websocket.Client{
 		ID:   userIdStr,

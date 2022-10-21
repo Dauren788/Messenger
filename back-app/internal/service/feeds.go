@@ -14,3 +14,7 @@ func NewFeedService(feedRepo repository.FeedRepositoryContract) FeedService {
 		feedRepo: &feedRepo,
 	}
 }
+
+func (f *feedService) PostFeed() {
+
+}

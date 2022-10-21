@@ -8,7 +8,7 @@ import (
 
 type FriendshipRepositoryContract interface {
 	Create(userID1, userID2 string) error
-	GetPending(userID1, userID2 string) ([]datastruct.PendingInvite, error)
+	GetPending(userID string) ([]datastruct.PendingInvite, error)
 }
 
 type FriendshipRepository struct {
@@ -30,10 +30,10 @@ func (f FriendshipRepository) Create(userID1, userID2 string) error {
 	return nil
 }
 
-func (f FriendshipRepository) GetPending(userID1, userID2 string) ([]datastruct.PendingInvite, error) {
+func (f FriendshipRepository) GetPending(userID string) ([]datastruct.PendingInvite, error) {
 	var pendindInvites []datastruct.PendingInvite
 
-	query := fmt.Sprintf(`SELECT * FROM friends WHERE userID1=%s AND userID2=%s AND confirmed=false`, userID1, userID2)
+	query := fmt.Sprintf(`SELECT * FROM friends WHERE userID2='%s' AND confirmed='false'`, userID)
 
 	rows, err := f.db().Query(query)
 
@@ -46,7 +46,7 @@ func (f FriendshipRepository) GetPending(userID1, userID2 string) ([]datastruct.
 
 	for rows.Next() {
 		var invite datastruct.PendingInvite
-		err = rows.Scan(invite.FromUser, invite.ToUser)
+		err = rows.Scan(&invite.FromUser, &invite.ToUser, &invite.Confimed)
 
 		if err != nil {
 			fmt.Println(err)

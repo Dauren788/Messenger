@@ -63,15 +63,7 @@ func (s *Services) FriendshipPending(c *gin.Context) {
 
 	userIdStr := strconv.FormatInt(int64(*userId), 10)
 
-	var body map[string]interface{}
-
-	if err := c.ShouldBindJSON(&body); err != nil {
-		c.String(http.StatusBadRequest, err.Error())
-	}
-
-	toUserID := body["toUserID"].(string)
-
-	result, err := s.friendService.GetPending(userIdStr, toUserID)
+	result, err := s.friendService.GetPending(userIdStr)
 
 	if err != nil {
 		fmt.Println(err)
