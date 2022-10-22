@@ -73,5 +73,20 @@ func (s *Services) FriendshipPending(c *gin.Context) {
 }
 
 func (s *Services) AcceptInvite(c *gin.Context) {
+	panic("Not implemented")
+	// var body map[string]interface{}
 
+	// if err := c.ShouldBindJSON(&body); err != nil {
+	// 	c.String(http.StatusBadRequest, err.Error())
+	// }
+
+	// inviteID := body["pendingInviteID"].(string)
+
+	// userList, err := s.friendService.(inviteID)
+
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// c.JSON(http.StatusOK, userList)
 }

@@ -40,10 +40,12 @@ func main() {
 
 	router.GET("/feeds/", services.GetFeeds)
 	router.POST("/feeds/post/", services.PostFeed)
+
 	router.GET("/friends/search/", services.SearchFriend)
-	router.GET("/friends/pending/", services.FriendshipPending)
 	router.POST("/friends/invite/", services.SendFriendshipInvite)
+	router.GET("/friends/pending/", services.FriendshipPending)
 	router.POST("/friends/accept/", services.AcceptInvite)
+
 	router.POST("/register/", services.Register)
 	router.POST("/login/", services.Login)
 	router.GET("/ws/chats/", func(ctx *gin.Context) {

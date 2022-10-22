@@ -7,8 +7,9 @@ import (
 )
 
 type FriendshipRepositoryContract interface {
-	Create(userID1, userID2 string) error
+	CreatePending(userID1, userID2 string) error
 	GetPending(userID string) ([]datastruct.PendingInvite, error)
+	AcceptPending(pendingID string)
 }
 
 type FriendshipRepository struct {
@@ -19,8 +20,8 @@ func NewFriendshipRepository(db func() *sql.DB) FriendshipRepositoryContract {
 	return FriendshipRepository{db: db}
 }
 
-func (f FriendshipRepository) Create(userID1, userID2 string) error {
-	query := fmt.Sprintf("INSERT INTO friends(userID1, userID2) VALUES(%s, %s)", userID1, userID2)
+func (f FriendshipRepository) CreatePending(userID1, userID2 string) error {
+	query := fmt.Sprintf("INSERT INTO pending_friend(fromUser, toUser) VALUES(%s, %s)", userID1, userID2)
 
 	if _, err := f.db().Exec(query); err != nil {
 		fmt.Println(err)
@@ -33,7 +34,7 @@ func (f FriendshipRepository) Create(userID1, userID2 string) error {
 func (f FriendshipRepository) GetPending(userID string) ([]datastruct.PendingInvite, error) {
 	var pendindInvites []datastruct.PendingInvite
 
-	query := fmt.Sprintf(`SELECT * FROM friends WHERE userID2='%s' AND confirmed='false'`, userID)
+	query := fmt.Sprintf(`SELECT * FROM pending_friend WHERE toUser='%s'`, userID)
 
 	rows, err := f.db().Query(query)
 
@@ -46,7 +47,7 @@ func (f FriendshipRepository) GetPending(userID string) ([]datastruct.PendingInv
 
 	for rows.Next() {
 		var invite datastruct.PendingInvite
-		err = rows.Scan(&invite.FromUser, &invite.ToUser, &invite.Confimed)
+		err = rows.Scan(&invite.FromUser, &invite.ToUser)
 
 		if err != nil {
 			fmt.Println(err)
@@ -57,4 +58,8 @@ func (f FriendshipRepository) GetPending(userID string) ([]datastruct.PendingInv
 	}
 
 	return pendindInvites, nil
+}
+
+func (f FriendshipRepository) AcceptPending(pendingID string) {
+	panic("Not implemented")
 }
