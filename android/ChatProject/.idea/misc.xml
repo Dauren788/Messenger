@@ -3,6 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/chat_bubble_left.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/chat_bubble_right.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/content_copy-48px.xml" value="0.1" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_emoji_emotions_24.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_feed_24.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_thumb_up_24.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1825" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/activity_main.xml" value="0.3" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/activity_registration.xml" value="0.3" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/card_chats_list_view.xml" value="0.3" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/card_chatting_view.xml" value="0.3" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/feed_item_view.xml" value="0.264" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/fragment_feeds.xml" value="0.3" />
+        <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/fragment_profile.xml" value="0.3" />
         <entry key="..\:/Users/ddaur/Desktop/Messenger/android/ChatProject/app/src/main/res/layout/activity_greeting.xml" value="0.3" />
         <entry key="..\:/Users/ddaur/Desktop/Messenger/android/ChatProject/app/src/main/res/layout/activity_login.xml" value="0.3" />
         <entry key="..\:/Users/ddaur/Desktop/Messenger/android/ChatProject/app/src/main/res/layout/activity_logup.xml" value="0.3" />

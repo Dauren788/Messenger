@@ -1,14 +1,20 @@
 package com.example.chatproject.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.chatproject.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,32 +23,28 @@ import com.example.chatproject.R;
  */
 public class FeedsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FeedsFragment() {
-        // Required empty public constructor
-    }
+    private RecyclerView feedRecycler;
+    private ArrayList<Feed>arrayList;
+    Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        //setContentView(R.layout.fragment_feeds);
+        //feedRecycler = findViewById(R.id.feedRecycler);
+        this.context = context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        arrayList = new ArrayList<>();
+        feedRecycler = getView().findViewById(R.id.feedRecycler);
+        arrayList.add(new Feed(R.drawable.ic_launcher_background, R.drawable.feed_image, "title", "message"));
+        FeedRecyclerAdapter recyclerAdapter = new FeedRecyclerAdapter(arrayList);
+        feedRecycler.setAdapter(recyclerAdapter);
+        feedRecycler.setLayoutManager(new LinearLayoutManager(context));
         return inflater.inflate(R.layout.fragment_feeds, container, false);
     }
 
