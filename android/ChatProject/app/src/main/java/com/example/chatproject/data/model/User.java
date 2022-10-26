@@ -22,6 +22,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.surname = surname;
+        this.name = name;
         this.email = email;
         this.phone = phone;
         this.passwordHash = passwordHash;
@@ -40,7 +41,24 @@ public class User {
                 '}';
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public String getLoggedUserId() {
         return id.toString();
     }
+
 }

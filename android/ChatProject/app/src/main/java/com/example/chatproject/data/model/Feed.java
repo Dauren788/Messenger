@@ -1,4 +1,4 @@
-package com.example.chatproject.ui;
+package com.example.chatproject.data.model;
 
 public class Feed {
     private int profileIcon;

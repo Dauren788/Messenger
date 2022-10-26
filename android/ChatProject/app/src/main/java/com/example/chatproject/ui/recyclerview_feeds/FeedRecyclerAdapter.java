@@ -1,4 +1,4 @@
-package com.example.chatproject.ui;
+package com.example.chatproject.ui.recyclerview_feeds;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatproject.R;
-
-import org.w3c.dom.Text;
+import com.example.chatproject.data.model.Feed;
 
 import java.util.ArrayList;
 

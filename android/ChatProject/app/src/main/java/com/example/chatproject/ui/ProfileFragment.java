@@ -2,12 +2,18 @@ package com.example.chatproject.ui;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
 
 /**
@@ -15,7 +21,7 @@ import com.example.chatproject.R;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +31,12 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.friends).setOnClickListener(this);
+    }
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -61,6 +73,27 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        TextView emailField = rootView.findViewById(R.id.logged_user_email);
+        emailField.setText(MainActivity.loggedUser.getUser().getEmail());
+
+        TextView phoneField = rootView.findViewById(R.id.logged_user_phone);
+        phoneField.setText(MainActivity.loggedUser.getUser().getPhone());
+
+        TextView nameAndSurname = rootView.findViewById(R.id.logged_user_name_surname);
+        nameAndSurname.setText(MainActivity.loggedUser.getUser().getSurname() + " " + MainActivity.loggedUser.getUser().getName());
+
+        return rootView;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        // Handle click based on v.getId()
+        Fragment newFragment = new SearchFriendsFragment();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame_layout, newFragment);
+        ft.commit();
     }
 }
