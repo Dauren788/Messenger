@@ -69,6 +69,7 @@
             android:layout_gravity="start"
             android:layout_marginTop="26dp"
             android:enabled="true"
+            android:backgroundTint="#14213D"
             android:text="@string/login"
             android:textSize="16.9dp"
             app:cornerRadius="10.4dp" />

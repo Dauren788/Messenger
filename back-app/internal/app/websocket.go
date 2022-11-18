@@ -63,8 +63,8 @@ func (s *Services) ProcessMessage(message websocket.Message) {
 		// Get all last messages from everyone
 		s.GetAllChatsLastMsg(message)
 	case SendMessageToUser:
-		// Send message to user
-		s.SendMessageToUser(message)
+		// Send message to conversation
+		s.SendMessageToConversation(message)
 	case GetConversationMsgs:
 		// Get conversation messages
 		s.GetConversationMsgs(message)

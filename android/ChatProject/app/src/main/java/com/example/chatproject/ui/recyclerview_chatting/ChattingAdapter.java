@@ -37,22 +37,24 @@ public class ChattingAdapter extends RecyclerView.Adapter<RecyclerViewHolder> im
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-
         ChatMessage message = this.chatMessages.get(position);
 
-        if(MainActivity.loggedUser.getUser().getLoggedUserId().equals(message.getProfileId()))
-        {
+        System.out.println("----Alert. onBindViewHolder ignoring date layout");
+        holder.dateLayout.setVisibility(LinearLayout.GONE);
+        holder.dateTextView.setVisibility(LinearLayout.GONE);
 
+        if (MainActivity.loggedUser.getUser().getLoggedUserId().equals(message.getProfileId()))
+        {
             holder.rightMsgLayout.setVisibility(LinearLayout.VISIBLE);
             holder.rightMsgTextView.setText(message.getMessageText());
+            holder.messageRightDateTextView.setText(message.getMessageSendDate());
             holder.leftMsgLayout.setVisibility(LinearLayout.GONE);
-
         }
         else
         {
-
             holder.leftMsgLayout.setVisibility(LinearLayout.VISIBLE);
             holder.leftMsgTextView.setText(message.getMessageText());
+            holder.messageLeftDateTextView.setText(message.getMessageSendDate());
             holder.rightMsgLayout.setVisibility(LinearLayout.GONE);
         }
     }
@@ -62,6 +64,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<RecyclerViewHolder> im
         if (chatMessages!=null) {
             return chatMessages.size();
         }
+
         return 0;
     }
 

@@ -8,10 +8,11 @@ import (
 
 type ChatRepositoryContract interface {
 	GetAllChatsByUserId(userId string) ([]datastruct.ChatsLastMsgs, error)
-	CreateMessage(from_user string, conversation_id string, text string) error
+	CreateMessage(from_user string, conversation_id string, text string) (int64, error)
 	CreateNewConverasation(firstUserID string, secondUserID string) (string, error)
 	GetConversationMessages(conversationId string) ([]datastruct.ChatMessage, error)
 	CheckUserInConversation(userId string, conversationId string) (bool, error)
+	GetConversationMemebersIDs(conversationId string) ([]string, error)
 }
 
 type ChatRepository struct {
@@ -116,17 +117,27 @@ func (u ChatRepository) GetAllChatsByUserId(userId string) ([]datastruct.ChatsLa
 	return msgs, nil
 }
 
-func (u ChatRepository) CreateMessage(from_user string, conversation_id string, text string) error {
+func (u ChatRepository) CreateMessage(from_user string, conversation_id string, text string) (int64, error) {
 	var err error
+	var stmt *sql.Stmt
+	var id int64
 
-	query := fmt.Sprintf(`INSERT INTO dbo.message(from_user, conversation_id, text) VALUES('%s', %s, '%s')`, from_user, conversation_id, text)
+	query := fmt.Sprintf(`INSERT INTO dbo.message(from_user, conversation_id, text) VALUES('%s', %s, '%s'); 
+	SELECT SCOPE_IDENTITY()`, from_user, conversation_id, text)
 
-	if _, err := u.db().Exec(query); err != nil {
+	if stmt, err = u.db().Prepare(query); err != nil {
 		fmt.Println(err)
-		return err
+		return 0, err
 	}
 
-	return err
+	if err := u.db().QueryRow(query).Scan(&id); err != nil {
+		fmt.Println(err)
+		return 0, err
+	}
+
+	defer stmt.Close()
+
+	return id, err
 }
 
 func (u ChatRepository) GetConversationMessages(conversationId string) ([]datastruct.ChatMessage, error) {
@@ -162,4 +173,33 @@ func (u ChatRepository) GetConversationMessages(conversationId string) ([]datast
 	}
 
 	return msgs, nil
+}
+
+func (u ChatRepository) GetConversationMemebersIDs(conversationId string) ([]string, error) {
+	var membersIDs []string
+
+	query := fmt.Sprintf(`SELECT user_id FROM users_conversations WHERE conversation_id='%s'`, conversationId)
+
+	rows, err := u.db().Query(query)
+
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var memberId string
+		err = rows.Scan(&memberId)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		membersIDs = append(membersIDs, memberId)
+	}
+
+	return membersIDs, nil
 }

@@ -9,7 +9,7 @@ import (
 type FriendshipRepositoryContract interface {
 	CreatePending(userID1, userID2 string) error
 	GetPending(userID string) ([]datastruct.PendingInvite, error)
-	AcceptPending(pendingID string)
+	AcceptPending(pendingID string) error
 }
 
 type FriendshipRepository struct {
@@ -47,7 +47,7 @@ func (f FriendshipRepository) GetPending(userID string) ([]datastruct.PendingInv
 
 	for rows.Next() {
 		var invite datastruct.PendingInvite
-		err = rows.Scan(&invite.FromUser, &invite.ToUser)
+		err = rows.Scan(&invite.Id, &invite.FromUser, &invite.ToUser)
 
 		if err != nil {
 			fmt.Println(err)
@@ -60,6 +60,18 @@ func (f FriendshipRepository) GetPending(userID string) ([]datastruct.PendingInv
 	return pendindInvites, nil
 }
 
-func (f FriendshipRepository) AcceptPending(pendingID string) {
+func (f FriendshipRepository) AcceptPending(pendingID string) error {
 	panic("Not implemented")
+
+	query := fmt.Sprintf(`BEGIN TRANSACTION; 
+						DELETE FROM pending_friend WHERE pendingID='%s';
+						INSERT INTO friends(userID1, userID2) VALUES();
+						COMMIT;`, pendingID)
+
+	if _, err := f.db().Exec(query); err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	return nil
 }

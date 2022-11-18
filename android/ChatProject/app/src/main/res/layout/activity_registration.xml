@@ -82,6 +82,7 @@
             android:layout_height="65dp"
             android:layout_marginTop="20.8dp"
             android:text="@string/register"
+            android:backgroundTint="#14213D"
             android:textSize="16.9dp"
             android:textStyle="bold"
             app:cornerRadius="10.4dp"/>

@@ -13,6 +13,7 @@ type PendingFriends struct {
 }
 
 type PendingInvite struct {
+	Id       string `json:"id"`
 	FromUser string `json:"fromUser"`
 	ToUser   string `json:"toUser"`
 }

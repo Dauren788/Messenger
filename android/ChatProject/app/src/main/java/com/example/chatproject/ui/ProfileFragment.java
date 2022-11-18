@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.friends).setOnClickListener(this);
+//        view.findViewById(R.id.profile).setOnClickListener(this);
     }
 
     public ProfileFragment() {

@@ -15,15 +15,25 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder {
     LinearLayout rightMsgLayout;
     TextView leftMsgTextView;
     TextView rightMsgTextView;
+    LinearLayout dateLayout;
+    TextView dateTextView;
+    TextView messageLeftDateTextView;
+    TextView messageRightDateTextView;
 
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
 
         if(itemView!=null) {
             leftMsgLayout = (LinearLayout) itemView.findViewById(R.id.chat_left_msg_layout);
-            rightMsgLayout = (LinearLayout) itemView.findViewById(R.id.chat_right_msg_layout);
             leftMsgTextView = (TextView) itemView.findViewById(R.id.chat_left_msg_text_view);
+            messageLeftDateTextView = (TextView) itemView.findViewById(R.id.chat_left_msg_text_date);
+
+            rightMsgLayout = (LinearLayout) itemView.findViewById(R.id.chat_right_msg_layout);
             rightMsgTextView = (TextView) itemView.findViewById(R.id.chat_right_msg_text_view);
+            messageRightDateTextView = (TextView) itemView.findViewById(R.id.chat_right_msg_text_date);
+
+            dateLayout = (LinearLayout) itemView.findViewById(R.id.date_layout);
+            dateTextView = (TextView) itemView.findViewById(R.id.date_text_view);
         }
     }
 }

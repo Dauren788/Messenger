@@ -76,7 +76,7 @@ public class ChatsFragment extends Fragment implements RecyclerViewInterface {
 
         MainActivity.wsListener.ws.send(json);
 
-        Fragment newFragment = new ChattingFragment();
+        Fragment newFragment = new ChattingFragment(conversationId);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, newFragment);
         ft.commit();

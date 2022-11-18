@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -45,6 +46,10 @@ func (s *Services) SendFriendshipInvite(c *gin.Context) {
 
 	toUserID := body["toUserID"].(string)
 
+	if userIdStr == toUserID {
+		fmt.Println(errors.New("Pending friendship invite to itself"))
+	}
+
 	err = s.friendService.SendInvite(userIdStr, toUserID)
 
 	if err != nil {
@@ -73,20 +78,13 @@ func (s *Services) FriendshipPending(c *gin.Context) {
 }
 
 func (s *Services) AcceptInvite(c *gin.Context) {
-	panic("Not implemented")
-	// var body map[string]interface{}
+	var body map[string]interface{}
 
-	// if err := c.ShouldBindJSON(&body); err != nil {
-	// 	c.String(http.StatusBadRequest, err.Error())
-	// }
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+	}
 
-	// inviteID := body["pendingInviteID"].(string)
+	inviteID := body["pendingInviteID"].(string)
 
-	// userList, err := s.friendService.(inviteID)
-
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// c.JSON(http.StatusOK, userList)
+	s.friendService.AcceptInvite(inviteID)
 }

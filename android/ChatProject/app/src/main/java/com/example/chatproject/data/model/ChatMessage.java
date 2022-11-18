@@ -51,6 +51,10 @@ public class ChatMessage {
         return this.fromUser;
     }
 
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
     public String getProfileUsername() {
         return this.username;
     }
@@ -61,7 +65,7 @@ public class ChatMessage {
 
     public String getMessageSendDate() {
         Date date = createdAt;
-        DateFormat dateFormat = new SimpleDateFormat("mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm");
         String strDate = dateFormat.format(date);
         return strDate;
     }

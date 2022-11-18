@@ -3,30 +3,51 @@ package app
 import (
 	"chat-project-go/internal/dto"
 	"chat-project-go/pkg/websocket"
+	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 func (s *Services) StartConversationWithUser(message websocket.Message) {
 
 }
 
-func (s *Services) SendMessageToUser(message websocket.Message) {
+func (s *Services) SendMessageToConversation(message websocket.Message) {
 	senderUserId := message.UserID
 	conversationId := message.Body["conversation_id"].(string)
 	text := message.Body["text"].(string)
 
-	success, err := s.chatService.SendMessageToConversation(senderUserId, conversationId, text)
+	// must get inserted rows
+	msgID, err := s.chatService.SendMessageToConversation(senderUserId, conversationId, text)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	response := dto.WebsocketMsg{
-		Type:    GetConversationMsgs,
-		Message: success,
+	senderUserIdInt64, _ := strconv.ParseInt(senderUserId, 10, 64)
+	conversationIdInt64, _ := strconv.ParseInt(conversationId, 10, 64)
+
+	createdMessage := dto.ChatMessage{
+		MessageId:      msgID,
+		FromUser:       senderUserIdInt64,
+		Text:           text,
+		ConversationId: conversationIdInt64,
 	}
 
-	s.wsPool.Clients[senderUserId].WriteJSON(response)
+	jsonBytes, _ := json.Marshal(createdMessage)
+
+	response := dto.WebsocketMsg2{
+		Type: 5,
+		Body: string(jsonBytes),
+	}
+
+	members, err := s.chatService.GetConversationMembersIDs(conversationId)
+
+	for _, v := range members {
+		if s.wsPool.Clients[v] != nil {
+			s.wsPool.Clients[v].WriteJSON(response)
+		}
+	}
 }
 
 func (s *Services) GetConversationMsgs(message websocket.Message) {
@@ -39,9 +60,11 @@ func (s *Services) GetConversationMsgs(message websocket.Message) {
 		fmt.Println(err)
 	}
 
-	response := dto.WebsocketMsg{
-		Type:    GetConversationMsgs,
-		Message: result,
+	jsonBytes, _ := json.Marshal(result)
+
+	response := dto.WebsocketMsg2{
+		Type: GetConversationMsgs,
+		Body: string(jsonBytes),
 	}
 
 	s.wsPool.Clients[userId].WriteJSON(response)
@@ -57,9 +80,11 @@ func (s *Services) GetAllChatsLastMsg(message websocket.Message) {
 		return
 	}
 
-	response := dto.WebsocketMsg{
-		Type:    GettAllChatsLastMsg,
-		Message: result,
+	jsonBytes, _ := json.Marshal(result)
+
+	response := dto.WebsocketMsg2{
+		Type: GettAllChatsLastMsg,
+		Body: string(jsonBytes),
 	}
 
 	s.wsPool.Clients[userId].WriteJSON(response)

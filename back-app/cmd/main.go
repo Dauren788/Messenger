@@ -39,7 +39,10 @@ func main() {
 	})
 
 	router.GET("/feeds/", services.GetFeeds)
-	router.POST("/feeds/post/", services.PostFeed)
+	router.POST("/feeds/", services.PostFeed)
+	router.POST("/feeds/comment", nil)
+	router.POST("/feeds/like", nil)
+	router.POST("/feeds/dislike", nil)
 
 	router.GET("/friends/search/", services.SearchFriend)
 	router.POST("/friends/invite/", services.SendFriendshipInvite)

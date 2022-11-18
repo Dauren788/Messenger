@@ -2,6 +2,7 @@ package com.example.chatproject.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,13 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
 import com.example.chatproject.data.model.ChatMessage;
+import com.example.chatproject.databinding.ActivityLoginBinding;
+import com.example.chatproject.databinding.FragmentChattingBinding;
 import com.example.chatproject.ui.recyclerview_chats_list.ChatsListAdapter;
 import com.example.chatproject.ui.recyclerview_chatting.ChattingAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +36,8 @@ import java.util.ArrayList;
  */
 public class ChattingFragment extends Fragment {
     public static ArrayList<ChatMessage> chatMessages;
-    static ChattingAdapter adapter;
+    private FragmentChattingBinding binding;
+    public static ChattingAdapter adapter;
     RecyclerView recyclerView;
     private String conversationID;
     long timeout = 1000;
@@ -63,6 +71,7 @@ public class ChattingFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static ChattingFragment newInstance(String param1, String param2) {
+        System.out.println(param1 + " " + param2);
         ChattingFragment fragment = new ChattingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -83,8 +92,10 @@ public class ChattingFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         adapter = new ChattingAdapter(context, chatMessages);
         recyclerView.setAdapter(adapter);
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
         adapter.notifyDataSetChanged();
 
+        setSendMessageListener(conversationID, context, view);
     }
 
     @Override
@@ -99,7 +110,22 @@ public class ChattingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chatting, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_chatting, container, false);
+
+        TextView usernameTextView = rootView.findViewById(R.id.conversation_username);
+        usernameTextView.setText(conversationID);
+
+        return rootView;
+    }
+
+    private void setSendMessageListener (String conversationID, Context context, View view) {
+        Button sendBtn = (Button) view.findViewById(R.id.chat_send_msg);
+        EditText messageField = (EditText) view.findViewById(R.id.chat_input_msg);
+
+        sendBtn.setOnClickListener(View -> {
+            String json = "{\"type\":1, \"conversation_id\":\"" + conversationID + "\", \"text\":\"" + messageField.getText().toString() + "\"}";
+            MainActivity.wsListener.ws.send(json);
+            messageField.getText().clear();
+        });
     }
 }

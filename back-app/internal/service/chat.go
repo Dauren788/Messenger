@@ -8,8 +8,9 @@ import (
 type ChatService interface {
 	GetAllChatsById(userId string) ([]datastruct.ChatsLastMsgs, error)
 	StartNewConversation(fromUser string, toUser string, text string) error
-	SendMessageToConversation(userId string, conversation_id string, message string) (bool, error)
+	SendMessageToConversation(userId string, conversation_id string, message string) (int64, error)
 	GetChatMessages(userId string, conversationId string) ([]datastruct.ChatMessage, error)
+	GetConversationMembersIDs(conversationID string) ([]string, error)
 }
 
 type chatService struct {
@@ -29,7 +30,7 @@ func (c chatService) StartNewConversation(fromUser string, toUser string, text s
 		return err
 	}
 
-	err = c.chatRepo.CreateMessage(fromUser, conversationId, text)
+	_, err = c.chatRepo.CreateMessage(fromUser, conversationId, text)
 
 	if err != nil {
 		return err
@@ -38,23 +39,34 @@ func (c chatService) StartNewConversation(fromUser string, toUser string, text s
 	return nil
 }
 
-func (c chatService) SendMessageToConversation(userId string, conversationId string, message string) (bool, error) {
+func (c chatService) SendMessageToConversation(userId string, conversationId string, message string) (int64, error) {
+	var msgId int64
+
 	userIsInConversation, err := c.chatRepo.CheckUserInConversation(userId, conversationId)
 
 	if err != nil {
-		return false, err
+		return msgId, err
 	}
 
 	if userIsInConversation {
-
-		err := c.chatRepo.CreateMessage(userId, conversationId, message)
+		msgId, err := c.chatRepo.CreateMessage(userId, conversationId, message)
 
 		if err != nil {
-			return false, err
+			return msgId, err
 		}
 	}
 
-	return true, nil
+	return msgId, nil
+}
+
+func (c chatService) GetConversationMembersIDs(conversationID string) ([]string, error) {
+	membersIDs, err := c.chatRepo.GetConversationMemebersIDs(conversationID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return membersIDs, nil
 }
 
 func (c chatService) GetAllChatsById(userId string) ([]datastruct.ChatsLastMsgs, error) {

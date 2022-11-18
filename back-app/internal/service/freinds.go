@@ -3,6 +3,7 @@ package service
 import (
 	"chat-project-go/internal/datastruct"
 	"chat-project-go/internal/repository"
+	"fmt"
 )
 
 type FriendService interface {
@@ -59,11 +60,9 @@ func (f *friendService) GetPending(userID string) ([]datastruct.PendingInvite, e
 }
 
 func (f *friendService) AcceptInvite(id string) {
-	// _, err := f.friendsRepo.Get(id)
+	err := f.friendsRepo.AcceptPending(id)
 
-	panic("Implement me!")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
+	if err != nil {
+		fmt.Println(err)
+	}
 }
