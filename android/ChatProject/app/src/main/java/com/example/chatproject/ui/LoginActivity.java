@@ -55,11 +55,16 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordField = (EditText) findViewById(R.id.inputPassword);
 
         loginBtn.setOnClickListener(View -> {
-            try {
-                login(emailField.getText().toString(), passwordField.getText().toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", null);
+            MainActivity.loggedUser = logged;
+            Intent returnBtn = new Intent(getApplicationContext(),
+                    MainActivity.class);
+            startActivity(returnBtn);
+//            try {
+//                login(emailField.getText().toString(), passwordField.getText().toString());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         });
     }
 
@@ -89,37 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent returnBtn = new Intent(getApplicationContext(),
                     MainActivity.class);
             startActivity(returnBtn);
-//            URL httpEndpoint = new URL("http://10.0.2.2:8080/login/");
-//            HttpURLConnection urlConnection =
-//                    (HttpURLConnection) httpEndpoint.openConnection();
-//
-//            final String basicAuth = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
-//
-//            urlConnection.setRequestMethod("POST");
-//            urlConnection.setRequestProperty("Authorization", basicAuth);
-//            urlConnection.setRequestProperty("Content-Type", "application/json");
-//            urlConnection.setRequestProperty("Connection", "keep-alive");
-//            urlConnection.setDoOutput(true);
-//
-//            String line;
-//            BufferedReader reader;
-//            StringBuffer responseContent = new StringBuffer();
-//
-//            int status = urlConnection.getResponseCode();
-//
-//            if (status > 299) {
-//                reader = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
-//                while ((line = reader.readLine()) != null) {
-//                    responseContent.append(line);
-//                }
-//                reader.close();
-//            } else {
-//                reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//                while ((line = reader.readLine()) != null) {
-//                    responseContent.append(line);
-//                }
-//                reader.close();
-//            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

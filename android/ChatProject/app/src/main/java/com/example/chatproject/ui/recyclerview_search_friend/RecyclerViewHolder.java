@@ -14,21 +14,9 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
+
         profileUserName = itemView.findViewById(R.id.tvUsername);
         name = itemView.findViewById(R.id.tvName);
-//
-//        itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (recyclerViewInterface != null) {
-//                    int pos = getAdapterPosition();
-//
-//                    if (pos != RecyclerView.NO_POSITION) {
-//                        recyclerViewInterface.onItemClick(pos);
-//                    }
-//                }
-//            }
-//        });
     }
 
 }

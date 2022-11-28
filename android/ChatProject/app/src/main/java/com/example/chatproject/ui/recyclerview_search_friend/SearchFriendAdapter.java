@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chatproject.R;
 import com.example.chatproject.data.model.ChatMessage;
 import com.example.chatproject.data.model.Profile;
+import com.example.chatproject.data.model.SearchUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFriendAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     Context context;
-    List<Profile> userList = new ArrayList<>();
+    List<SearchUser> userList;
 
-    public SearchFriendAdapter(Context context, List<Profile> usersList) {
+    public SearchFriendAdapter(Context context, List<SearchUser> usersList) {
         this.context = context;
         this.userList = usersList;
     }
@@ -32,10 +33,10 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        Profile profile = userList.get(position);
+        SearchUser user = this.userList.get(position);
 
-        String username = profile.getUsername();
-        String name = profile.getName();
+        String username = user.getUsername();
+        String name = user.getName();
 
         holder.profileUserName.setText(username);
         holder.name.setText(name);
@@ -43,7 +44,11 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        if (userList!=null) {
+            return userList.size();
+        }
+
+        return 0;
     }
 
 }

@@ -21,7 +21,7 @@ import com.example.chatproject.R;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements View.OnClickListener{
+public class ProfileFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,15 +85,5 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         nameAndSurname.setText(MainActivity.loggedUser.getUser().getSurname() + " " + MainActivity.loggedUser.getUser().getName());
 
         return rootView;
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        // Handle click based on v.getId()
-        Fragment newFragment = new SearchFriendsFragment();
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_layout, newFragment);
-        ft.commit();
     }
 }

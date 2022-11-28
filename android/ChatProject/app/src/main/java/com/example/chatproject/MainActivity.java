@@ -145,9 +145,6 @@ public class MainActivity extends AppCompatActivity {
                     ChattingFragment.chatMessages = arrayTwo;
                     break;
                 case "5":
-//                receive new chat message
-//                Type typeFive =  new TypeToken<ArrayList<NewMessage>>(){}.getType();
-//                ArrayList<ChatMessage> arrayFive = gson.fromJson(data.getBody(), typeFive);
                     mainThread = new Thread() {
                         @Override
                         public void run() {

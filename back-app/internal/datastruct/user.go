@@ -9,4 +9,5 @@ type User struct {
 	Phone        string `json:"phone"`
 	PasswordHash string `json:"password_hash"`
 	UserType     string `db:"role"`
+	ProfileImage string `json:"profile_image"`
 }

@@ -10,6 +10,7 @@ type Services struct {
 	chatService     service.ChatService
 	feedsService    service.FeedService
 	friendService   service.FriendService
+	profileService  service.ProfileImageService
 	jwtTokenService service.TokenManager
 	wsPool          *websocket.Pool
 }
@@ -20,6 +21,7 @@ func NewServices(
 	feedsService service.FeedService,
 	friendService service.FriendService,
 	jwtTokenService service.TokenManager,
+	profileImageService service.ProfileImageService,
 	wsPool *websocket.Pool,
 ) *Services {
 	return &Services{
@@ -27,6 +29,7 @@ func NewServices(
 		chatService:     chatService,
 		feedsService:    feedsService,
 		friendService:   friendService,
+		profileService:  profileImageService,
 		jwtTokenService: jwtTokenService,
 		wsPool:          wsPool,
 	}

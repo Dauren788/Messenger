@@ -10,13 +10,11 @@ import (
 )
 
 func (s *Services) SearchFriend(c *gin.Context) {
-	var body map[string]interface{}
+	searchStr, exist := c.GetQuery("searchString")
 
-	if err := c.ShouldBindJSON(&body); err != nil {
-		c.String(http.StatusBadRequest, err.Error())
+	if exist == false {
+		c.String(http.StatusBadRequest, "Field not provided")
 	}
-
-	searchStr := body["searchString"].(string)
 
 	userList, err := s.friendService.Search(searchStr)
 
@@ -24,6 +22,7 @@ func (s *Services) SearchFriend(c *gin.Context) {
 		fmt.Println(err)
 	}
 
+	fmt.Println(userList)
 	c.JSON(http.StatusOK, userList)
 }
 

@@ -62,7 +62,9 @@ func (u UserRepository) GetUserByEmail(email string) (*datastruct.User, error) {
 
 	defer stmt.Close()
 
-	if err := u.db().QueryRow(query).Scan(&user.Id, &user.Username, &user.Name, &user.Surname, &user.Email, &user.Phone, &user.PasswordHash, &user.UserType); err != nil {
+	var profileImage sql.NullString
+
+	if err := u.db().QueryRow(query).Scan(&user.Id, &user.Username, &user.Name, &user.Surname, &user.Email, &user.Phone, &user.PasswordHash, &user.UserType, &profileImage); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}

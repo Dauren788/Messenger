@@ -26,10 +26,11 @@ func main() {
 	chatService := service.NewChatService(chatRepository)
 	feedService := service.NewFeedService(feedRepository)
 	friendship := service.NewFriendsService(friendshipRepository, userRepository)
+	profileImageService := service.NewProfileImageService()
 
 	pool := websocket.NewPool()
 
-	services := app.NewServices(authService, chatService, feedService, friendship, jwtTokenService, pool)
+	services := app.NewServices(authService, chatService, feedService, friendship, jwtTokenService, profileImageService, pool)
 
 	go pool.Start()
 
@@ -48,6 +49,10 @@ func main() {
 	router.POST("/friends/invite/", services.SendFriendshipInvite)
 	router.GET("/friends/pending/", services.FriendshipPending)
 	router.POST("/friends/accept/", services.AcceptInvite)
+
+	router.GET("/profile-images/", services.ProfileImage)
+	router.POST("/profile-images/", func(ctx *gin.Context) {
+	})
 
 	router.POST("/register/", services.Register)
 	router.POST("/login/", services.Login)

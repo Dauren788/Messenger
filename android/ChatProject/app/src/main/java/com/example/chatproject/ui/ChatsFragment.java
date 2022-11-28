@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
@@ -22,6 +24,8 @@ import com.example.chatproject.ui.recyclerview_contract.RecyclerViewInterface;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -45,8 +49,14 @@ public class ChatsFragment extends Fragment implements RecyclerViewInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chats, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_chats,
+                container, false);
+        Button searchFriendBtn = view.findViewById(R.id.search_friend_btm);
+        searchFriendBtn.setOnClickListener(View -> {
+                onButtonSearchFriends(view);
+        });
+        return view;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -77,6 +87,13 @@ public class ChatsFragment extends Fragment implements RecyclerViewInterface {
         MainActivity.wsListener.ws.send(json);
 
         Fragment newFragment = new ChattingFragment(conversationId);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame_layout, newFragment);
+        ft.commit();
+    }
+
+    public void onButtonSearchFriends(View view) {
+        Fragment newFragment = new SearchFriendsFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, newFragment);
         ft.commit();

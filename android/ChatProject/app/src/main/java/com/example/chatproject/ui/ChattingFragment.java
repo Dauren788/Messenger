@@ -36,7 +36,6 @@ import java.util.ArrayList;
  */
 public class ChattingFragment extends Fragment {
     public static ArrayList<ChatMessage> chatMessages;
-    private FragmentChattingBinding binding;
     public static ChattingAdapter adapter;
     RecyclerView recyclerView;
     private String conversationID;

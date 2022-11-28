@@ -1,14 +1,46 @@
 package com.example.chatproject.ui;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
+import com.example.chatproject.data.model.ChatMessage;
+import com.example.chatproject.data.model.LoggedInUser;
+import com.example.chatproject.data.model.SearchUser;
+import com.example.chatproject.ui.recyclerview_chatting.ChattingAdapter;
+import com.example.chatproject.ui.recyclerview_search_friend.SearchFriendAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+
+import okhttp3.Credentials;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +48,10 @@ import com.example.chatproject.R;
  * create an instance of this fragment.
  */
 public class SearchFriendsFragment extends Fragment {
+    private String endpoint = "http://10.0.2.2:8080/friends/search/";
+    private static SearchFriendAdapter adapter;
+    RecyclerView recyclerView;
+    Context context;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,4 +99,76 @@ public class SearchFriendsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_friends, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        EditText searchEditText = view.findViewById(R.id.search_user_edittext);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                getUsersList(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        context = getContext();
+
+        recyclerView = view.findViewById(R.id.search_users_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setHasFixedSize(true);
+
+        adapter = new SearchFriendAdapter(context, null);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void getUsersList(String searchStr) {
+        System.out.println();
+        try {
+//            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+//            RequestBody body = RequestBody.create(JSON, "\"searchString\":\"" + searchStr + "\"");
+//
+//            Request request  = new Request.Builder()
+//                    .url(endpoint).post(body).get()
+//                    .build();
+
+            String url = HttpUrl.parse(endpoint).newBuilder()
+                    .addQueryParameter("searchString", searchStr)
+                    .build().toString();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            ResponseBody responseBody = client.newCall(request).execute().body();
+
+            Gson gson = new Gson();
+            Type arrayListType =  new TypeToken<ArrayList<SearchUser>>(){}.getType();
+            ArrayList<SearchUser> responseEntity = gson.fromJson(responseBody.string(), arrayListType);
+
+            adapter = new SearchFriendAdapter(context, responseEntity);
+            recyclerView.setAdapter(adapter);
+            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+            adapter.notifyDataSetChanged();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
