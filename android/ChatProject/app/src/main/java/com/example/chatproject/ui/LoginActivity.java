@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
 import com.example.chatproject.data.model.LoggedInUser;
+import com.example.chatproject.data.model.User;
 import com.example.chatproject.databinding.ActivityLoginBinding;
 import com.google.gson.Gson;
 
@@ -55,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordField = (EditText) findViewById(R.id.inputPassword);
 
         loginBtn.setOnClickListener(View -> {
-            LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", null);
+            User user1 = new User(2, "default","Surn", "Name", "email@mail.ru", "23232", "asdasd");
+            LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", user1);
             MainActivity.loggedUser = logged;
             Intent returnBtn = new Intent(getApplicationContext(),
                     MainActivity.class);
