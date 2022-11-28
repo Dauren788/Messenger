@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        app:showAsAction="always"
+        android:title=""
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:id="@+id/feed_main_menu"
+        >
+        <menu>
+            <item
+                android:id="@+id/feed_options_story"
+                android:title="Story"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/feed_options_photo"
+                android:title="Photo"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/feed_options_shorts"
+                android:title="Shorts"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/feed_options_trans"
+                android:title="Translation"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/feed_options_record"
+                android:title="Record"
+                app:showAsAction="never"/>
+        </menu>
+
+
+    </item>
+</menu>

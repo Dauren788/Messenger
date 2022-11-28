@@ -46,11 +46,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/feedTitle"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/feedMenu"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/ic_baseline_more_vert_24"
             app:layout_constraintBottom_toBottomOf="@+id/clTop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +67,7 @@
         android:src="@mipmap/ic_launcher"
         app:layout_constraintTop_toBottomOf="@id/clTop"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/feedLike"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -75,7 +76,7 @@
         android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/feedComment"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -84,7 +85,7 @@
         android:padding="10dp"
         app:layout_constraintStart_toEndOf="@id/feedLike"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/feedShare"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -93,7 +94,7 @@
         android:padding="10dp"
         app:layout_constraintStart_toEndOf="@id/feedComment"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/feedBookmark"
         android:layout_width="50dp"
         android:layout_height="50dp"

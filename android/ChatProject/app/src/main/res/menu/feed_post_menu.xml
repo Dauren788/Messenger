@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        app:showAsAction="always"
+        android:title=""
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:id="@+id/posts_menu">
+        <menu>
+            <item
+                android:id="@+id/notify"
+                android:title="Notify about new entries"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/not_interesting"
+                android:title="It's not interesting"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/hide_source"
+                android:title="Hide source news"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/copy_link"
+                android:title="Copy the link"
+                app:showAsAction="never"/>
+        </menu>
+
+
+    </item>
+</menu>
