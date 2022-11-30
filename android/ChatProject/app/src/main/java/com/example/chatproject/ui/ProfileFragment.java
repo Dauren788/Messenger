@@ -6,11 +6,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +31,8 @@ import com.example.chatproject.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -93,21 +101,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.inflatedView = inflater.inflate(R.layout.)
-        Intent intent = getActivity().getIntent();
-//        imgPicker = requireView().findViewById(R.id.button_profile);
-//        captureImage = getView().findViewById(R.id.profile_image);
-        imgPicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImagePicker.with(ProfileFragment.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080,1080 )
-                        .start();
-                startActivityForResult(intent, 101);
-            }
-        });
 
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -121,20 +114,75 @@ public class ProfileFragment extends Fragment {
         TextView nameAndSurname = rootView.findViewById(R.id.logged_user_name_surname);
         nameAndSurname.setText(MainActivity.loggedUser.getUser().getSurname() + " " + MainActivity.loggedUser.getUser().getName());
 
+       // this.inflatedView = inflater.inflate(R.layout.fragment_profile, container, false);
+        imgPicker = (FloatingActionButton)rootView.findViewById(R.id.button_profile);
+        captureImage = rootView.findViewById(R.id.profile_image);
+        Intent intent = getPickIntent(uri);//getActivity().getIntent();
+//        imgPicker = requireView().findViewById(R.id.button_profile);
+//        captureImage = getView().findViewById(R.id.profile_image);
+        imgPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),"no image selected", Toast.LENGTH_SHORT).show();
+                ImagePicker.with(ProfileFragment.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1080,1080 )
+                        .start();
 
-
+                startActivityResult.launch(intent);
+                //startActivityForResult(intent, 101);
+            }
+        });
         return rootView;
     }
+    private Intent getPickIntent(Uri cameraOutputUri) {
+        final List<Intent> intents = new ArrayList<Intent>();
 
+        if (true) {
+            intents.add(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+        }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //if(requestCode == 101 && resultCode == Activity.RESULT_OK){
-        uri = data.getData();
-        captureImage.setImageURI(uri);
-//        } else {
-//            Toast.makeText(getActivity().getApplicationContext(),"no image selected", Toast.LENGTH_SHORT).show();
+//        if (true) {
+//            setCameraIntents(intents, cameraOutputUri);
 //        }
+
+        if (intents.isEmpty()) return null;
+        Intent result = Intent.createChooser(intents.remove(0), null);
+        if (!intents.isEmpty()) {
+            result.putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toArray(new Parcelable[] {}));
+        }
+        return result;
+
+
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//     //   super.onActivityResult(requestCode, resultCode, data);
+//        //if(requestCode == 101 && resultCode == Activity.RESULT_OK){
+//        uri = data.getData();
+//        captureImage.setImageURI(uri);
+////        } else {
+////            Toast.makeText(getActivity().getApplicationContext(),"no image selected", Toast.LENGTH_SHORT).show();
+////        }
+//    }
+
+
+
+
+    ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                       // doSomeOperations();
+                        uri = data.getData();
+                        captureImage.setImageURI(uri);
+                    }
+                }
+            });
 }
