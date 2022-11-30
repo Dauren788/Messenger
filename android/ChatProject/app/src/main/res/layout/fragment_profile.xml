@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/button_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -44,7 +44,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="300dp"
             android:layout_marginEnd="22dp"
-            android:backgroundTint="#FCA311"
+            android:clickable="true"
+            android:backgroundTint="#4CAF50"
             android:contentDescription="edit_profile"
             android:src="@drawable/ic_baseline_edit_24" />
     </RelativeLayout>
