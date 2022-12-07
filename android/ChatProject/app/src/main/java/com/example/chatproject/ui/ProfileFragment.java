@@ -2,7 +2,10 @@ package com.example.chatproject.ui;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -31,6 +35,7 @@ import com.example.chatproject.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -123,14 +128,17 @@ public class ProfileFragment extends Fragment {
         imgPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"no image selected", Toast.LENGTH_SHORT).show();
-                ImagePicker.with(ProfileFragment.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080,1080 )
-                        .start();
-
+//                Toast.makeText(getActivity().getApplicationContext(),"no image selected", Toast.LENGTH_SHORT).show();
+//                ImagePicker.with(ProfileFragment.this)
+//                        .crop()
+//                        .compress(1024)
+//                        .maxResultSize(1080,1080 )
+//                        .start();
+                File file = getActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM);
+                Uri cameraOutputUri = Uri.fromFile(file);
+                Intent intent = getPickIntent(cameraOutputUri);
                 startActivityResult.launch(intent);
+             //   startActivityResult.launch(intent);
                 //startActivityForResult(intent, 101);
             }
         });
@@ -143,9 +151,9 @@ public class ProfileFragment extends Fragment {
             intents.add(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
         }
 
-//        if (true) {
-//            setCameraIntents(intents, cameraOutputUri);
-//        }
+        if (true) {
+            setCameraIntents(intents, cameraOutputUri);
+        }
 
         if (intents.isEmpty()) return null;
         Intent result = Intent.createChooser(intents.remove(0), null);
@@ -157,6 +165,20 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void setCameraIntents(List<Intent> cameraIntents, Uri output) {
+        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final PackageManager packageManager = getActivity().getPackageManager();
+        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam) {
+            final String packageName = res.activityInfo.packageName;
+            final Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(packageName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
+            cameraIntents.add(intent);
+        }
+
+
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //     //   super.onActivityResult(requestCode, resultCode, data);
@@ -167,7 +189,7 @@ public class ProfileFragment extends Fragment {
 ////            Toast.makeText(getActivity().getApplicationContext(),"no image selected", Toast.LENGTH_SHORT).show();
 ////        }
 //    }
-
+    }
 
 
 
@@ -185,4 +207,5 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
+
 }
