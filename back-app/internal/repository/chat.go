@@ -86,7 +86,7 @@ func (u ChatRepository) GetAllChatsByUserId(userId string) ([]datastruct.ChatsLa
 	var msgs []datastruct.ChatsLastMsgs
 
 	query := fmt.Sprintf(`SELECT * FROM (
-		SELECT ROW_NUMBER() OVER (PARTITION BY message.conversation_id ORDER BY message.created_at DESC) AS LastMessage, users.username,message.conversation_id, message.message_id, message.from_user, message.text, message.created_at
+		SELECT ROW_NUMBER() OVER (PARTITION BY message.conversation_id ORDER BY message.created_at DESC) AS LastMessage, users.username, users.profile_image, message.conversation_id, message.message_id, message.from_user, message.text, message.created_at
 		FROM users_conversations
 		JOIN message
 		ON users_conversations.conversation_id = message.conversation_id
@@ -104,7 +104,7 @@ func (u ChatRepository) GetAllChatsByUserId(userId string) ([]datastruct.ChatsLa
 
 	for rows.Next() {
 		var msg datastruct.ChatsLastMsgs
-		err = rows.Scan(&msg.LastMessage, &msg.Username, &msg.ConversationID, &msg.MessageID, &msg.FromUser, &msg.Text, &msg.CreatedAt)
+		err = rows.Scan(&msg.LastMessage, &msg.Username, &msg.ProfileImage, &msg.ConversationID, &msg.MessageID, &msg.FromUser, &msg.Text, &msg.CreatedAt)
 
 		if err != nil {
 			fmt.Println(err)

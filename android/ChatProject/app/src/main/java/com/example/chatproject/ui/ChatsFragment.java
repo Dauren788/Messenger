@@ -72,21 +72,24 @@ public class ChatsFragment extends Fragment implements RecyclerViewInterface {
 
         recyclerView = view.findViewById(R.id.chats_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         ChatsListAdapter adapter = new ChatsListAdapter(context, chatsList, this);
         recyclerView.setAdapter(adapter);
+
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(int position) {
         String conversationId = chatsList.get(position).getConversationId();
+        String profileImage = chatsList.get(position).getProfileImage();
+        String userName = chatsList.get(position).getProfileUsername();
 
         String json = "{\"type\":2, \"conversation_id\":\"" + conversationId + "\"}";
 
         MainActivity.wsListener.ws.send(json);
 
-        Fragment newFragment = new ChattingFragment(conversationId);
+        Fragment newFragment = new ChattingFragment(conversationId, profileImage, userName);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, newFragment);
         ft.commit();

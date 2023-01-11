@@ -34,13 +34,13 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/chat_bubble_left">
 
-        <TextView
+        <com.example.chatproject.ui.CustomTextView
             android:maxWidth="200dp"
             android:id="@+id/chat_left_msg_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="@dimen/TextSize"
             android:layout_margin="10dp"
             android:text="default asd asd asd asd asd  asd asd as da sdasd a sdas "/>
 
@@ -65,13 +65,13 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/chat_bubble_right">
 
-        <TextView
+        <com.example.chatproject.ui.CustomTextView
             android:maxWidth="200dp"
             android:id="@+id/chat_right_msg_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="18dp"
+            android:textSize="@dimen/TextSize"
             android:text="default asd as das da das dd aas das das dad "
             android:textColor="@color/white" />
 

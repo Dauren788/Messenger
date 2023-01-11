@@ -41,12 +41,24 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:text="Conversation id" />
+                android:text="Conversation username" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:cardCornerRadius="30dp">
+
+                <ImageView
+                    android:id="@+id/user_profile_img"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/ic_baseline_emoji_emotions_24"
+                    />
+            </androidx.cardview.widget.CardView>
         </androidx.appcompat.widget.Toolbar>
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_messages_view"
         android:layout_marginLeft="5dp"

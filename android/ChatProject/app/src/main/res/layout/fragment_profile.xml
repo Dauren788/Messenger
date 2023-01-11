@@ -44,8 +44,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="300dp"
             android:layout_marginEnd="22dp"
+            android:backgroundTint="#FCA311"
             android:clickable="true"
-            android:backgroundTint="#4CAF50"
             android:contentDescription="edit_profile"
             android:src="@drawable/ic_baseline_edit_24" />
     </RelativeLayout>
@@ -129,11 +129,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/settings_button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="25dp"
             android:background="#FFFFFF"
             android:orientation="horizontal"
+            android:clickable="true"
             android:paddingLeft="25dp">
 
             <ImageView

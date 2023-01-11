@@ -17,8 +17,10 @@ public class User {
     private String phone;
     @SerializedName(value="password_hash")
     private String passwordHash;
+    @SerializedName(value="profile_image")
+    private String profileImage;
 
-    public User(Integer id, String username, String name, String surname, String email, String phone, String passwordHash) {
+    public User(Integer id, String username, String name, String surname, String email, String phone, String passwordHash, String profileImage) {
         this.id = id;
         this.username = username;
         this.surname = surname;
@@ -26,6 +28,7 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.passwordHash = passwordHash;
+        this.profileImage = profileImage;
     }
 
     @Override
@@ -39,6 +42,10 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 '}';
+    }
+
+    public void setNewProfileImage(String filename) {
+        this.profileImage = filename;
     }
 
     public String getSurname() {
@@ -61,4 +68,5 @@ public class User {
         return id.toString();
     }
 
+    public String getProfileImage() { return profileImage; }
 }

@@ -7,6 +7,9 @@ import (
 	"chat-project-go/internal/service"
 	"chat-project-go/pkg/websocket"
 	"net/http"
+	"path"
+	"path/filepath"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +29,7 @@ func main() {
 	chatService := service.NewChatService(chatRepository)
 	feedService := service.NewFeedService(feedRepository)
 	friendship := service.NewFriendsService(friendshipRepository, userRepository)
-	profileImageService := service.NewProfileImageService()
+	profileImageService := service.NewProfileImageService(userRepository)
 
 	pool := websocket.NewPool()
 
@@ -50,8 +53,17 @@ func main() {
 	router.GET("/friends/pending/", services.FriendshipPending)
 	router.POST("/friends/accept/", services.AcceptInvite)
 
-	router.GET("/profile-images/", services.ProfileImage)
-	router.POST("/profile-images/", func(ctx *gin.Context) {
+	router.GET("/profile-images/", services.GetProfileImage)
+	router.POST("/profile-images/", services.UploadImage)
+	router.GET("/img/:asset", func(c *gin.Context) {
+		dir := "storage"
+		asset := c.Param("asset")
+		if strings.TrimPrefix(asset, "/") == "" {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+		fullName := filepath.Join(dir, filepath.FromSlash(path.Clean("/"+asset)))
+		c.File(fullName)
 	})
 
 	router.POST("/register/", services.Register)

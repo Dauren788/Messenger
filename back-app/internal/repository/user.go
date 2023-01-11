@@ -13,6 +13,7 @@ type UserRepositoryContract interface {
 	GetUserPasswordByEmail(email string) (string, error)
 	GetUserIdByEmail(email string) (int64, error)
 	Search(str string) (*[]datastruct.PossibleFriend, error)
+	UpdateImage(str string, userID int64) error
 }
 
 type UserRepository struct {
@@ -21,6 +22,18 @@ type UserRepository struct {
 
 func NewUserRepository(db func() *sql.DB) UserRepositoryContract {
 	return UserRepository{db: db}
+}
+
+func (u UserRepository) UpdateImage(str string, userID int64) error {
+	fmt.Println(str, userID)
+	query := fmt.Sprintf(`UPDATE dbo.users SET profile_image='%s' WHERE id='%d'`, str, userID)
+
+	if _, err := u.db().Exec(query); err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	return nil
 }
 
 func (u UserRepository) CreateUser(user dto.User) (int64, error) {
@@ -62,9 +75,7 @@ func (u UserRepository) GetUserByEmail(email string) (*datastruct.User, error) {
 
 	defer stmt.Close()
 
-	var profileImage sql.NullString
-
-	if err := u.db().QueryRow(query).Scan(&user.Id, &user.Username, &user.Name, &user.Surname, &user.Email, &user.Phone, &user.PasswordHash, &user.UserType, &profileImage); err != nil {
+	if err := u.db().QueryRow(query).Scan(&user.Id, &user.Username, &user.Name, &user.Surname, &user.Email, &user.Phone, &user.PasswordHash, &user.UserType, &user.ProfileImage); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}

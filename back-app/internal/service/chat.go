@@ -70,13 +70,7 @@ func (c chatService) GetConversationMembersIDs(conversationID string) ([]string,
 }
 
 func (c chatService) GetAllChatsById(userId string) ([]datastruct.ChatsLastMsgs, error) {
-	allChatsMsgs, err := c.chatRepo.GetAllChatsByUserId(userId)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return allChatsMsgs, nil
+	return c.chatRepo.GetAllChatsByUserId(userId)
 }
 
 func (c chatService) GetChatMessages(userId string, conversationId string) ([]datastruct.ChatMessage, error) {

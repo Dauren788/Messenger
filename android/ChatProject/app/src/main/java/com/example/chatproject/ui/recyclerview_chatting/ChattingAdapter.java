@@ -1,17 +1,20 @@
 package com.example.chatproject.ui.recyclerview_chatting;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
 import com.example.chatproject.data.model.ChatMessage;
+import com.example.chatproject.ui.SettingsActivity;
 import com.example.chatproject.ui.recyclerview_contract.RecyclerViewInterface;
 
 import java.util.List;

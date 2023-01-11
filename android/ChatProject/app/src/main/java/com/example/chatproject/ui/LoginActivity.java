@@ -57,20 +57,20 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(View -> {
 
-            User user1 = new User(2, "default","Surn", "Name",
-                "email@mail.ru", "23232", "asdasd");
-            LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", user1);
+//            User user1 = new User(2, "default","Surn", "Name",
+//                "email@mail.ru", "23232", "asdasd");
+//            LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", user1);
 
-            //  LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", null);
-            MainActivity.loggedUser = logged;
-              Intent returnBtn = new Intent(getApplicationContext(),
-                    MainActivity.class);
-            startActivity(returnBtn);
-//            try {
-//                login(emailField.getText().toString(), passwordField.getText().toString());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+//              LoggedInUser logged = new LoggedInUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk2OTYzNzMsInN1YiI6IjIwMTYifQ.2njJuukJ9C86b5uHyvuCR48vAC-bIc7pMEFVB4fTBz4", null);
+//            MainActivity.loggedUser = logged;
+//              Intent returnBtn = new Intent(getApplicationContext(),
+//                    MainActivity.class);
+//            startActivity(returnBtn);
+            try {
+                login(emailField.getText().toString(), passwordField.getText().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 

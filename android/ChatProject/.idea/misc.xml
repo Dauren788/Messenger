@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.10041966426858513" />
         <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_feed_24.xml" value="0.158" />
         <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.158" />
         <entry key="..\:/Users/ddaur/AndroidStudioProjects/Messenger/android/ChatProject/app/src/main/res/layout/feed_item_view.xml" value="0.1" />
@@ -23,16 +24,26 @@
         <entry key="app/src/main/res/drawable/bg_receive_message.xml" value="0.3" />
         <entry key="app/src/main/res/drawable/chat_bubble_left.xml" value="0.3" />
         <entry key="app/src/main/res/drawable/chat_bubble_right.xml" value="0.3" />
+        <entry key="app/src/main/res/drawable/circle_image.xml" value="0.233" />
+        <entry key="app/src/main/res/drawable/circular_image1.xml" value="0.233" />
+        <entry key="app/src/main/res/drawable/feed_card_bubble.xml" value="0.317" />
         <entry key="app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.2785" />
+        <entry key="app/src/main/res/drawable/ic_baseline_content_copy_24.xml" value="0.317" />
+        <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2265" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.342" />
         <entry key="app/src/main/res/drawable/ic_baseline_emoji_emotions_24.xml" value="0.358" />
         <entry key="app/src/main/res/drawable/ic_baseline_feed_24.xml" value="0.342" />
         <entry key="app/src/main/res/drawable/ic_baseline_local_phone_24.xml" value="0.358" />
+        <entry key="app/src/main/res/drawable/ic_baseline_mode_comment_24.xml" value="0.317" />
+        <entry key="app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.317" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.358" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.358" />
+        <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.317" />
+        <entry key="app/src/main/res/drawable/ic_baseline_thumb_up_24.xml" value="0.317" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.358" />
         <entry key="app/src/main/res/drawable/profile_image_background.xml" value="0.342" />
         <entry key="app/src/main/res/drawable/xv.xml" value="0.342" />
+        <entry key="app/src/main/res/font/smallyy.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.12013888888888889" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.16018518518518518" />
@@ -42,11 +53,13 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.16018518518518518" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.10733695652173914" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.24365942028985507" />
         <entry key="app/src/main/res/layout/card_chats_list_view.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/card_chatting_view.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/card_chatting_view.xml" value="0.15267175572519084" />
         <entry key="app/src/main/res/layout/card_chatview.xml" value="0.33" />
         <entry key="app/src/main/res/layout/chat_display_layout.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.16018518518518518" />
+        <entry key="app/src/main/res/layout/content_settings.xml" value="0.33" />
         <entry key="app/src/main/res/layout/feed_item_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/feed_page.xml" value="0.11776348342404751" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.35625" />
@@ -61,6 +74,8 @@
         <entry key="app/src/main/res/layout/frame_chatview.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/search_user.xml" value="0.3692708333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/feed_post_menu.xml" value="0.3507692307692308" />
+        <entry key="app/src/main/res/menu/main_feed_options_menu.xml" value="0.3507692307692308" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.342" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.342" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/profile_image.xml" value="0.199" />

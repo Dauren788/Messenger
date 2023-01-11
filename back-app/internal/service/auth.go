@@ -54,6 +54,7 @@ func (a *authService) SignIn(email, reqPassword string) (*dto.User, *string, err
 		Email:        result.Email,
 		Phone:        result.Phone,
 		PasswordHash: result.PasswordHash,
+		ProfileImage: result.ProfileImage,
 	}
 
 	if user.PasswordHash != reqPasswordHash {

@@ -3,6 +3,8 @@ package com.example.chatproject.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,23 +13,30 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chatproject.MainActivity;
 import com.example.chatproject.R;
 import com.example.chatproject.data.model.ChatMessage;
-import com.example.chatproject.databinding.ActivityLoginBinding;
-import com.example.chatproject.databinding.FragmentChattingBinding;
 import com.example.chatproject.ui.recyclerview_chats_list.ChatsListAdapter;
 import com.example.chatproject.ui.recyclerview_chatting.ChattingAdapter;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.ResponseBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +46,11 @@ import java.util.ArrayList;
 public class ChattingFragment extends Fragment {
     public static ArrayList<ChatMessage> chatMessages;
     public static ChattingAdapter adapter;
+    private String urlGetImage = "http://10.0.2.2:8080/img/";
     RecyclerView recyclerView;
     private String conversationID;
+    private String profileImage;
+    private String userName;
     long timeout = 1000;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -56,8 +68,10 @@ public class ChattingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public ChattingFragment(String conversationID) {
+    public ChattingFragment(String conversationID, String profileImage, String userName) {
         this.conversationID = conversationID;
+        this.profileImage = profileImage;
+        this.userName = userName;
     }
 
     /**
@@ -112,7 +126,15 @@ public class ChattingFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_chatting, container, false);
 
         TextView usernameTextView = rootView.findViewById(R.id.conversation_username);
-        usernameTextView.setText(conversationID);
+        usernameTextView.setText(userName);
+
+        ImageView profileImageView = rootView.findViewById(R.id.user_profile_img);
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getProfileImageBytes(this.profileImage));
+            profileImageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, profileImageView.getDrawable().getIntrinsicWidth(), profileImageView.getDrawable().getIntrinsicHeight(), false));
+        } catch (Exception e) {
+            Log.e("Create file error : ", e.getMessage());
+        }
 
         return rootView;
     }
@@ -126,5 +148,24 @@ public class ChattingFragment extends Fragment {
             MainActivity.wsListener.ws.send(json);
             messageField.getText().clear();
         });
+    }
+
+    private InputStream getProfileImageBytes(String fileName) {
+        try {
+            String url = Objects.requireNonNull(HttpUrl.parse(urlGetImage + fileName )).newBuilder()
+                    .build().toString();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            ResponseBody responseBody = client.newCall(request).execute().body();
+
+            return responseBody.byteStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

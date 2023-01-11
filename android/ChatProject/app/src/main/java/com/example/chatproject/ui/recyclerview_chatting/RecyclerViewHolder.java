@@ -1,5 +1,7 @@
 package com.example.chatproject.ui.recyclerview_chatting;
 
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -8,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatproject.R;
+import com.example.chatproject.ui.SettingsActivity;
 import com.example.chatproject.ui.recyclerview_contract.RecyclerViewInterface;
 
 class RecyclerViewHolder extends RecyclerView.ViewHolder {

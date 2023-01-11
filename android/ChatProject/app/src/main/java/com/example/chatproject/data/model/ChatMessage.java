@@ -14,6 +14,8 @@ import java.util.Date;
 public class ChatMessage {
     @SerializedName(value="LastMessage")
     private String LastMessage;
+    @SerializedName(value="profile_image", alternate = "ProfileImage")
+    private String profileImage;
     @SerializedName(value="conversation_id", alternate = "ConversationID")
     private String conversationId;
     @SerializedName(value="username", alternate = "Username")
@@ -27,8 +29,9 @@ public class ChatMessage {
     @SerializedName(value="created_at", alternate = "CreatedAt")
     private Date createdAt;
 
-    public ChatMessage(String conversationId, String username, String messageId, String fromUser, String text, Date createdAt) {
+    public ChatMessage(String conversationId, String username, String profileImage, String messageId, String fromUser, String text, Date createdAt) {
         this.username = username;
+        this.profileImage = profileImage;
         this.conversationId = conversationId;
         this.messageId = messageId;
         this.fromUser = fromUser;
@@ -39,7 +42,10 @@ public class ChatMessage {
     @Override
     public String toString() {
         return "ChatMessage{" +
-                "conversationId='" + conversationId + '\'' +
+                "LastMessage='" + LastMessage + '\'' +
+                ", profileImage='" + profileImage + '\'' +
+                ", conversationId='" + conversationId + '\'' +
+                ", username='" + username + '\'' +
                 ", messageId='" + messageId + '\'' +
                 ", fromUser='" + fromUser + '\'' +
                 ", text='" + text + '\'' +
@@ -49,6 +55,10 @@ public class ChatMessage {
 
     public String getProfileId() {
         return this.fromUser;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
     }
 
     public Date getCreatedAt() {
